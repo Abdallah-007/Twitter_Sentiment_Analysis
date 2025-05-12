@@ -112,22 +112,7 @@ Features:
 
 ### Deploy to Streamlit Cloud
 
-1. Sign up for a free account at [Streamlit Cloud](https://streamlit.io/cloud)
-
-2. Create a GitHub repository with your code:
-   ```
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/yourusername/twitter-sentiment-analysis.git
-   git push -u origin main
-   ```
-
-3. Connect your GitHub repository to Streamlit Cloud
-   - Click "New app"
-   - Select your repository, branch, and `src/streamlit_app.py` as the main file
-   - Click "Deploy"
+https://twittersentimentanalysis-egvbpbckfzu6tf8hamuv3f.streamlit.app/
 
 ## Feature Importance
 
