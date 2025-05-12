@@ -1,0 +1,11 @@
+text,predicted_sentiment,confidence
+I absolutely love this new feature! It's amazing and makes everything so much easier.,Positive,0.6647885466728445
+This product is terrible. The worst purchase I've ever made. Do not buy it!,Negative,0.6835889844070039
+The service was okay. Nothing special but it gets the job done.,Negative,0.4450389646694432
+I'm not sure how I feel about this update. It has some good points and some bad.,Negative,0.44334250435493794
+Just watched the latest movie in the series and it was fantastic! Best one yet!,Positive,0.3982686470589966
+The customer service at this company is non-existent. No one responds to emails.,Negative,0.672311159134396
+It works as advertised. Simple and straightforward.,Negative,0.4946805594400734
+Why would anyone think this is a good idea? Complete disaster!,Negative,0.361965751588212
+The concert last night was absolutely mind-blowing! I'm still in awe.,Negative,0.38799314059225287
+The website is down again. This happens every single week. So frustrating. ,Negative,0.4297123897979355
