@@ -8,8 +8,16 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from wordcloud import WordCloud
 import time
+
+# Try to import wordcloud, but provide fallback
+try:
+    from wordcloud import WordCloud
+    HAS_WORDCLOUD = True
+except ImportError:
+    HAS_WORDCLOUD = False
+    st.warning("WordCloud library not available. Some visualizations will be simplified.")
+
 from src.optimized_model import load_optimized_model
 from src.preprocess import preprocess_text, load_and_preprocess_data
 
@@ -141,6 +149,34 @@ def load_feature_importance():
 
 # Function to generate word cloud from texts
 def generate_wordcloud(texts, sentiment=None, max_words=100):
+    if not HAS_WORDCLOUD:
+        # Fallback visualization when wordcloud is not available
+        fig, ax = plt.subplots(figsize=(10, 5))
+        
+        # Join all texts and create word frequency count
+        text = ' '.join(texts)
+        words = text.split()
+        word_freq = {}
+        for word in words:
+            if len(word) > 3:  # Only count words with more than 3 characters
+                word_freq[word] = word_freq.get(word, 0) + 1
+        
+        # Get top words
+        top_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:max_words]
+        
+        # Create bar chart of top words
+        if top_words:
+            words, counts = zip(*top_words[:20])  # Show top 20 words
+            sns.barplot(x=list(counts), y=list(words), ax=ax, orient='h', 
+                       color=COLORS.get(sentiment, "#17a2b8"))
+            ax.set_title(f"Top Words - {sentiment or 'All'} Sentiment")
+        else:
+            ax.text(0.5, 0.5, "No words to display", ha='center', va='center')
+            ax.set_title("Word Frequency")
+        
+        return fig
+    
+    # Original wordcloud implementation
     if sentiment:
         title = f"Word Cloud - {sentiment} Sentiment"
     else:
