@@ -18,8 +18,9 @@ except ImportError:
     HAS_WORDCLOUD = False
     st.warning("WordCloud library not available. Some visualizations will be simplified.")
 
-from src.optimized_model import load_optimized_model
-from src.preprocess import preprocess_text, load_and_preprocess_data
+# Import local modules (from the same directory)
+from optimized_model import load_optimized_model
+from preprocess import preprocess_text, load_and_preprocess_data
 
 # Set page config
 st.set_page_config(
