@@ -84,4 +84,9 @@ data/*.csv
 
 # Logs
 logs/
-*.log 
+*.log
+
+# Heroku/deployment related (removed)
+Procfile
+setup.sh
+runtime.txt 
