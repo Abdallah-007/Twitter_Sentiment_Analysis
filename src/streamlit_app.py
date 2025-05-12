@@ -10,25 +10,25 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 
-# Try to import wordcloud, but provide fallback
-try:
-    from wordcloud import WordCloud
-    HAS_WORDCLOUD = True
-except ImportError:
-    HAS_WORDCLOUD = False
-    st.warning("WordCloud library not available. Some visualizations will be simplified.")
-
-# Import local modules (from the same directory)
-from optimized_model import load_optimized_model
-from preprocess import preprocess_text, load_and_preprocess_data
-
-# Set page config
+# Set page config FIRST - must be the first Streamlit command
 st.set_page_config(
     page_title="Twitter Sentiment Analysis",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Try to import wordcloud, but don't show warning yet
+try:
+    from wordcloud import WordCloud
+    HAS_WORDCLOUD = True
+except ImportError:
+    HAS_WORDCLOUD = False
+    # We'll show this warning later, not here
+
+# Import local modules (from the same directory)
+from optimized_model import load_optimized_model
+from preprocess import preprocess_text, load_and_preprocess_data
 
 # Define color scheme
 COLORS = {
@@ -345,6 +345,10 @@ def main():
         "An intelligent tool for analyzing sentiment in tweets using advanced machine learning. "
         "Find out if text conveys positive, negative, neutral, or irrelevant sentiment."
     )
+    
+    # Show warning about missing wordcloud if needed
+    if not HAS_WORDCLOUD:
+        st.warning("WordCloud library not available. Some visualizations will be simplified.")
     
     # Sidebar
     with st.sidebar:
