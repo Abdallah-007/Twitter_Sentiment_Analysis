@@ -205,22 +205,15 @@ def display_feature_importance():
         ax.set_title('Top 15 Important Features')
         st.pyplot(fig)
         
-        # Word cloud of top features
+        # Create horizontal bar chart of top features instead of wordcloud
         fig2, ax2 = plt.subplots(figsize=(10, 5))
-        # Create dictionary of feature: importance
-        feature_importance = dict(zip(importance_df['feature'], importance_df['importance']))
-        wc = WordCloud(
-            max_words=50,
-            background_color='white',
-            width=800,
-            height=400,
-            colormap='viridis',
-            contour_width=1,
-            contour_color='steelblue'
-        ).generate_from_frequencies(feature_importance)
-        ax2.imshow(wc, interpolation='bilinear')
-        ax2.set_title('Word Cloud of Important Features')
-        ax2.axis('off')
+        chart_data = importance_df.head(50)  # Top 50 features
+        # Reverse the data so largest values are at the top
+        chart_data = chart_data.iloc[::-1]
+        sns.barplot(data=chart_data.head(20), x='importance', y='feature', ax=ax2, palette='viridis')
+        ax2.set_xlabel('Importance Score')
+        ax2.set_ylabel('Feature')
+        ax2.set_title('Top 20 Important Features')
         st.pyplot(fig2)
     else:
         st.warning("Feature importance data not available. Run optimized_model.py first.")
@@ -349,7 +342,7 @@ def main():
         if example_button:
             user_input = "I just tried the new updates, and they're absolutely fantastic! The interface is so much cleaner and easier to use. Loving it so far!"
             st.session_state.example_used = True
-            st.experimental_rerun()
+            st.rerun()
         
         if 'example_used' in st.session_state and st.session_state.example_used:
             st.session_state.example_used = False
