@@ -9,10 +9,10 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 
-# Download NLTK resources (uncomment first time)
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
+# Download NLTK resources
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 def preprocess_text(text, remove_stopwords=True, stemming=False, lemmatization=False):
     """
