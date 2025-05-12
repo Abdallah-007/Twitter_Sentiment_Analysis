@@ -150,5 +150,4 @@ MIT
 
 ## Acknowledgments
 
-- Dataset provided by [source_name]
-- Inspired by [related_research] 
+- Dataset provided by [https://www.kaggle.com/datasets/jp797498e/twitter-entity-sentiment-analysis/data]
