@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from wordcloud import WordCloud
 import time
-from optimized_model import load_optimized_model
-from preprocess import preprocess_text, load_and_preprocess_data
+from src.optimized_model import load_optimized_model
+from src.preprocess import preprocess_text, load_and_preprocess_data
 
 # Set page config
 st.set_page_config(
