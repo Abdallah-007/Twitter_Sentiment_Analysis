@@ -18,14 +18,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Try to import wordcloud, but don't show warning yet
-try:
-    from wordcloud import WordCloud
-    HAS_WORDCLOUD = True
-except ImportError:
-    HAS_WORDCLOUD = False
-    # We'll show this warning later, not here
-
 # Import local modules (from the same directory)
 from optimized_model import load_optimized_model
 from preprocess import preprocess_text, load_and_preprocess_data
@@ -150,60 +142,30 @@ def load_feature_importance():
 
 # Function to generate word cloud from texts
 def generate_wordcloud(texts, sentiment=None, max_words=100):
-    if not HAS_WORDCLOUD:
-        # Fallback visualization when wordcloud is not available
-        fig, ax = plt.subplots(figsize=(10, 5))
-        
-        # Join all texts and create word frequency count
-        text = ' '.join(texts)
-        words = text.split()
-        word_freq = {}
-        for word in words:
-            if len(word) > 3:  # Only count words with more than 3 characters
-                word_freq[word] = word_freq.get(word, 0) + 1
-        
-        # Get top words
-        top_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:max_words]
-        
-        # Create bar chart of top words
-        if top_words:
-            words, counts = zip(*top_words[:20])  # Show top 20 words
-            sns.barplot(x=list(counts), y=list(words), ax=ax, orient='h', 
-                       color=COLORS.get(sentiment, "#17a2b8"))
-            ax.set_title(f"Top Words - {sentiment or 'All'} Sentiment")
-        else:
-            ax.text(0.5, 0.5, "No words to display", ha='center', va='center')
-            ax.set_title("Word Frequency")
-        
-        return fig
-    
-    # Original wordcloud implementation
-    if sentiment:
-        title = f"Word Cloud - {sentiment} Sentiment"
-    else:
-        title = "Word Cloud - All Texts"
-    
-    # Join all texts
-    text = ' '.join(texts)
-    
-    # Generate wordcloud
-    color = COLORS.get(sentiment, "viridis")
-    wc = WordCloud(
-        max_words=max_words,
-        background_color='white',
-        width=800,
-        height=400,
-        colormap=color if sentiment is None else None,
-        color_func=lambda *args, **kwargs: color if sentiment else None,
-        contour_width=1,
-        contour_color='steelblue'
-    ).generate(text)
-    
-    # Plot
+    # Always use the fallback visualization since we can't guarantee WordCloud availability
+    # Create bar chart of word frequencies instead
     fig, ax = plt.subplots(figsize=(10, 5))
-    ax.imshow(wc, interpolation='bilinear')
-    ax.set_title(title)
-    ax.axis('off')
+    
+    # Join all texts and create word frequency count
+    text = ' '.join(texts)
+    words = text.split()
+    word_freq = {}
+    for word in words:
+        if len(word) > 3:  # Only count words with more than 3 characters
+            word_freq[word] = word_freq.get(word, 0) + 1
+    
+    # Get top words
+    top_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:max_words]
+    
+    # Create bar chart of top words
+    if top_words:
+        words, counts = zip(*top_words[:20])  # Show top 20 words
+        sns.barplot(x=list(counts), y=list(words), ax=ax, orient='h', 
+                   color=COLORS.get(sentiment, "#17a2b8"))
+        ax.set_title(f"Top Words - {sentiment or 'All'} Sentiment")
+    else:
+        ax.text(0.5, 0.5, "No words to display", ha='center', va='center')
+        ax.set_title("Word Frequency")
     
     return fig
 
@@ -345,10 +307,6 @@ def main():
         "An intelligent tool for analyzing sentiment in tweets using advanced machine learning. "
         "Find out if text conveys positive, negative, neutral, or irrelevant sentiment."
     )
-    
-    # Show warning about missing wordcloud if needed
-    if not HAS_WORDCLOUD:
-        st.warning("WordCloud library not available. Some visualizations will be simplified.")
     
     # Sidebar
     with st.sidebar:
