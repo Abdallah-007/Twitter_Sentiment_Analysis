@@ -70,6 +70,7 @@ venv.bak/
 models/*.pkl
 models/*.h5
 *.pkl
+!models/optimized_model.pkl
 *.csv
 !sample_tweets.csv
 !prediction_results.csv
