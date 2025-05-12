@@ -2,7 +2,6 @@
 
 This project implements sentiment analysis on Twitter data using NLP and machine learning techniques. The system classifies tweets into four sentiment categories: Positive, Negative, Neutral, and Irrelevant.
 
-![Streamlit Demo](https://i.imgur.com/PmbJxoO.png)
 
 ## Project Structure
 - `data/`: Contains the Twitter datasets
